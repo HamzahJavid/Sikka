@@ -1,5 +1,5 @@
 package com.example.sikka_grphsfixed.fragments
-
+import androidx.core.view.WindowCompat
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sikka_grphsfixed.MainActivity
 import com.example.sikka_grphsfixed.R
@@ -27,7 +28,7 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.log_in) // Make sure your layout filename is login.xml
-
+        enableEdgeToEdge()
         FirebaseApp.initializeApp(this)
 
         // Initialize Firebase Auth

@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment
 import com.example.sikka_grphsfixed.Card
 import com.example.sikka_grphsfixed.Database
 import com.example.sikka_grphsfixed.R
-import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.charts.*
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,7 +24,7 @@ class AnalysisFragment : Fragment(R.layout.analysis) {
     private lateinit var graphsContainer: ConstraintLayout
     private val calendar = Calendar.getInstance()
 
-    private var selectedChartType: String = "Pie chart" // New variable
+    private var selectedChartType: String = "Pie chart"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,206 +39,288 @@ class AnalysisFragment : Fragment(R.layout.analysis) {
         monthSelector.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 val width = v.width
-                val touchX = event.x
-                if (touchX < width / 2) moveToPreviousMonth()
+                if (event.x < width / 2) moveToPreviousMonth()
                 else moveToNextMonth()
             }
             true
         }
 
-        chooseBtn.setOnClickListener { v ->
-            showAnalysisMenu(v)
-        }
+        chooseBtn.setOnClickListener { showAnalysisMenu(it) }
+
+        // Add this line to show the pie chart immediately
+        filterAndDisplayDataForSelectedMonth()
     }
 
+
+
     private fun updateMonthDisplay() {
-        val dateFormat = SimpleDateFormat("MMMM,yyyy", Locale.getDefault())
-        monthTextView.text = dateFormat.format(calendar.time)
+        val formatter = SimpleDateFormat("MMMM,yyyy", Locale.getDefault())
+        monthTextView.text = formatter.format(calendar.time)
     }
 
     private fun moveToPreviousMonth() {
         calendar.add(Calendar.MONTH, -1)
         updateMonthDisplay()
-        filterAndDisplayDataForSelectedMonth() // Filter data when month changes
+        filterAndDisplayDataForSelectedMonth()
     }
 
     private fun moveToNextMonth() {
         calendar.add(Calendar.MONTH, 1)
         updateMonthDisplay()
-        filterAndDisplayDataForSelectedMonth() // Filter data when month changes
+        filterAndDisplayDataForSelectedMonth()
     }
 
     private fun showAnalysisMenu(anchor: View) {
         val menu = PopupMenu(requireContext(), anchor)
-
         menu.menu.add("Pie chart")
         menu.menu.add("Bar chart")
-        menu.menu.add("Income / Expense table")
+        menu.menu.add("Expense FLow")
+        menu.menu.add("Income FLow")
 
         menu.setOnMenuItemClickListener { item ->
-            when (item.title.toString()) {
-                "Pie chart" -> {
-                    selectedChartType = "Pie chart"
-                    showPieChart()
-                }
-                "Bar chart" -> {
-                    selectedChartType = "Bar chart"
-                    showBarChart()
-                }
-                "Income / Expense table" -> {
-                    selectedChartType = "Income / Expense table"
-                    showSummaryTable()
-                }
-            }
+            selectedChartType = item.title.toString()
+            filterAndDisplayDataForSelectedMonth()
             true
         }
 
         menu.show()
     }
 
-    private fun showPieChart() {
+    private fun filterAndDisplayDataForSelectedMonth() {
         graphsContainer.removeAllViews()
+        val filteredCards = filterCardsByMonth(Database.cardList)
 
-        val accountTypes = Database.cardList.mapNotNull { it.accType }.distinct()
-
-        if (accountTypes.isEmpty()) {
-            // If no account types available, don't display anything
+        if (filteredCards.isEmpty()) {
             return
         }
 
-        val typeSelector = Spinner(requireContext())
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, accountTypes)
-        typeSelector.adapter = adapter
-
-        typeSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val filteredCards = filterCardsByMonth(Database.cardList)
-                if (filteredCards.isEmpty()) {
-                    return // Don't display anything if no data available for the selected month
-                }
-                displayPieChart(filteredCards)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
+        when (selectedChartType) {
+            "Pie chart" -> showPieChart(filteredCards)
+            "Bar chart" -> showBarChart(filteredCards)
+            "Income FLow" -> showIncomeFlowChart(filteredCards)
+            "Expense FLow" -> showExpenseFLowChart(filteredCards)
         }
-
-        graphsContainer.addView(typeSelector)
     }
 
     private fun filterCardsByMonth(cards: List<Card>): List<Card> {
-        // Extract month and year from the selected monthTextView (format: "MMMM, yyyy")
-        val selectedMonthText = monthTextView.text.toString()
-        val selectedMonthDate = try {
-            SimpleDateFormat("MMMM,yyyy", Locale.getDefault()).parse(selectedMonthText)
-        } catch (e: Exception) {
-            null
-        }
+        val selectedText = monthTextView.text.toString()
+        val formatter = SimpleDateFormat("MMMM,yyyy", Locale.getDefault())
+        val selectedDate = formatter.parse(selectedText) ?: return emptyList()
 
-        // If the selected month format is invalid, return empty list
-        if (selectedMonthDate == null) return emptyList()
+        val selectedCalendar = Calendar.getInstance().apply { time = selectedDate }
+        val selectedMonth = selectedCalendar.get(Calendar.MONTH)
+        val selectedYear = selectedCalendar.get(Calendar.YEAR)
 
-        val selectedMonth = Calendar.getInstance().apply { time = selectedMonthDate }.get(Calendar.MONTH)
-        val selectedYear = Calendar.getInstance().apply { time = selectedMonthDate }.get(Calendar.YEAR)
-
-        // Filter the cards based on the selected month and year
         return cards.filter { card ->
             val cardDate = try {
-                // Parse card date in "dd/MM/yyyy" format
                 SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(card.date)
             } catch (e: Exception) {
                 null
             }
-
-            // If card date is null, skip it
             cardDate?.let {
-                val cardCalendar = Calendar.getInstance().apply { time = cardDate }
-                val cardMonth = cardCalendar.get(Calendar.MONTH)
-                val cardYear = cardCalendar.get(Calendar.YEAR)
-
-                // Check if the card's month and year match the selected month and year
-                cardMonth == selectedMonth && cardYear == selectedYear
+                val cardCalendar = Calendar.getInstance().apply { time = it }
+                cardCalendar.get(Calendar.MONTH) == selectedMonth && cardCalendar.get(Calendar.YEAR) == selectedYear
             } ?: false
         }
     }
 
 
-    private fun displayPieChart(cards: List<Card>) {
-        if (cards.isEmpty()) {
-            return // If no valid data, don't display anything
-        }
-
+    private fun showPieChart(cards: List<Card>) {
         val pieChart = PieChart(requireContext())
+
         val entries = ArrayList<PieEntry>()
         val colors = ArrayList<Int>()
+        val categoryTotals = HashMap<String, Float>()
         val random = Random()
 
-        cards.forEach { card ->
-            val rawAmount = card.amount?.replace("$", "")?.trim() ?: "0"
-            val amount = rawAmount.toFloatOrNull() ?: 0f
-            if (amount <= 0f) return@forEach
-
-            val label = card.accType ?: "Unknown"
-            entries.add(PieEntry(amount, label))
-
-            val color = Color.rgb(
-                random.nextInt(200) + 30,
-                random.nextInt(200) + 30,
-                random.nextInt(200) + 30
-            )
-            colors.add(color)
+        for (card in cards) {
+            val amount = card.amount?.replace("$", "")?.toFloatOrNull() ?: continue
+            if (amount >= 0f) continue // Only process expenses (negative amounts)
+            val label = card.category ?: "Unknown"
+            categoryTotals[label] = categoryTotals.getOrDefault(label, 0f) + amount
         }
 
-        if (entries.isEmpty()) {
-            return // If no valid data to display, don't show anything
+        for ((label, total) in categoryTotals) {
+            entries.add(PieEntry(total, label))
+            colors.add(Color.rgb(random.nextInt(200) + 30, random.nextInt(200) + 30, random.nextInt(200) + 30))
         }
 
-        val dataSet = PieDataSet(entries, "Savings")
+
+        val dataSet = PieDataSet(entries, "Categories")
         dataSet.colors = colors
-        dataSet.sliceSpace = 3f
-        dataSet.selectionShift = 5f
 
         val data = PieData(dataSet)
         data.setValueTextSize(12f)
-        data.setValueTextColor(Color.WHITE)
+        data.setValueTextColor(Color.BLACK)
 
         pieChart.data = data
+
+        // Transparent settings
+        pieChart.setBackgroundColor(Color.BLUE) // Chart background transparent
+        pieChart.setHoleColor(Color.TRANSPARENT)       // Center hole transparent
+        pieChart.setTransparentCircleColor(Color.TRANSPARENT) // Transparent circle color
+
         pieChart.description.isEnabled = false
         pieChart.isDrawHoleEnabled = true
-        pieChart.setHoleColor(Color.WHITE)
         pieChart.setEntryLabelColor(Color.BLACK)
-        pieChart.centerText = "Accounts"
+        pieChart.centerText = "Expenses"
         pieChart.setCenterTextSize(20f)
         pieChart.animateY(1000)
 
         graphsContainer.addView(
-            pieChart, ConstraintLayout.LayoutParams(
+            pieChart,
+            ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.MATCH_PARENT,
                 ConstraintLayout.LayoutParams.MATCH_PARENT
             )
         )
     }
 
-    private fun showBarChart() {
-        graphsContainer.removeAllViews()
-        // Do nothing if bar chart is not implemented
-    }
 
-    private fun showSummaryTable() {
-        graphsContainer.removeAllViews()
-        // Do nothing if summary table is not implemented
-    }
+    private fun showIncomeFlowChart(cards: List<Card>) {
+        val lineChart = LineChart(requireContext())
 
-    private fun filterAndDisplayDataForSelectedMonth() {
-        // This method filters the cards based on the current selected month and displays them
-        val filteredCards = filterCardsByMonth(Database.cardList)
-        if (filteredCards.isEmpty()) {
-            graphsContainer.removeAllViews()
+        val entries = ArrayList<Entry>()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        for (card in cards) {
+            val date = try {
+                dateFormat.parse(card.date)
+            } catch (e: Exception) {
+                null
+            } ?: continue
+
+            val calendar = Calendar.getInstance().apply { time = date }
+            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH).toFloat()
+            val amount = card.amount?.replace("$", "")?.toFloatOrNull() ?: continue
+
+            if (amount <= 0f) continue // Only include positive (income) amounts
+
+            entries.add(Entry(dayOfMonth, amount))
         }
 
-        when (selectedChartType) {
-            "Pie chart" -> displayPieChart(filteredCards)
-            "Bar chart" -> showBarChart()
-            "Income / Expense table" -> showSummaryTable()
+        if (entries.isEmpty()) return
+
+        entries.sortBy { it.x }
+
+        val dataSet = LineDataSet(entries, "Income Flow")
+        dataSet.color = Color.GREEN
+        dataSet.valueTextColor = Color.BLACK
+        dataSet.circleRadius = 5f
+        dataSet.setCircleColor(Color.GREEN)
+        dataSet.lineWidth = 2f
+
+        val data = LineData(dataSet)
+
+        lineChart.data = data
+        lineChart.description.isEnabled = false
+        lineChart.axisRight.isEnabled = false
+        lineChart.animateX(1000)
+        lineChart.setTouchEnabled(true)
+        lineChart.setPinchZoom(true)
+
+        graphsContainer.addView(
+            lineChart,
+            ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
+        )
+    }
+
+
+    private fun showExpenseFLowChart(cards: List<Card>) {
+        val lineChart = LineChart(requireContext())
+
+        val entries = ArrayList<Entry>()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        for (card in cards) {
+            val date = try {
+                dateFormat.parse(card.date)
+            } catch (e: Exception) {
+                null
+            } ?: continue
+
+            val calendar = Calendar.getInstance().apply { time = date }
+            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH).toFloat()
+            val amount = card.amount?.replace("$", "")?.toFloatOrNull() ?: continue
+
+            if (amount >= 0f) continue // Only negative positive (income) amounts
+
+            entries.add(Entry(dayOfMonth, amount))
         }
+
+        if (entries.isEmpty()) return
+
+        entries.sortBy { it.x }
+
+        val dataSet = LineDataSet(entries, "Income Flow")
+        dataSet.color = Color.GREEN
+        dataSet.valueTextColor = Color.BLACK
+        dataSet.circleRadius = 5f
+        dataSet.setCircleColor(Color.GREEN)
+        dataSet.lineWidth = 2f
+
+        val data = LineData(dataSet)
+
+        lineChart.data = data
+        lineChart.description.isEnabled = false
+        lineChart.axisRight.isEnabled = false
+        lineChart.animateX(1000)
+        lineChart.setTouchEnabled(true)
+        lineChart.setPinchZoom(true)
+
+        graphsContainer.addView(
+            lineChart,
+            ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
+        )
+    }
+
+
+    private fun showBarChart(cards: List<Card>) {
+        val barChart = BarChart(requireContext())
+
+        val entries = ArrayList<BarEntry>()
+        val labels = ArrayList<String>()
+        val accTypeTotals = HashMap<String, Float>()
+
+        for (card in cards) {
+            val amount = card.amount?.replace("$", "")?.toFloatOrNull() ?: continue
+            if (amount <= 0f) continue
+            val accType = card.accType ?: "Unknown"
+            accTypeTotals[accType] = accTypeTotals.getOrDefault(accType, 0f) + amount
+        }
+
+        var index = 0f
+        for ((accType, total) in accTypeTotals) {
+            entries.add(BarEntry(index, total))
+            labels.add(accType)
+            index++
+        }
+
+        if (entries.isEmpty()) return
+
+        val dataSet = BarDataSet(entries, "Accounts")
+        dataSet.color = Color.rgb(60, 130, 255)
+        dataSet.valueTextColor = Color.BLACK
+        dataSet.valueTextSize = 12f
+
+        val data = BarData(dataSet)
+
+        barChart.data = data
+        barChart.description.isEnabled = false
+        barChart.axisRight.isEnabled = false
+        barChart.setFitBars(true)
+        barChart.animateY(1000)
+
+        val xAxis = barChart.xAxis
+        xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setDrawGridLines(false)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = -45f
+
+        graphsContainer.addView(
+            barChart,
+            ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
+        )
     }
 }

@@ -29,6 +29,10 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var cardAdapter: CardAdapter
 
+    private lateinit var income: TextView
+    private lateinit var expense: TextView
+    private lateinit var total: TextView
+
     private var currentMonth: Int = 0
     private var currentYear: Int = 0
     private lateinit var monthTextView: TextView
@@ -42,6 +46,10 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.records, container, false)
 
         // Initialize UI components
+        income = view.findViewById(R.id.income)
+        expense = view.findViewById(R.id.expense)
+        total = view.findViewById(R.id.total)
+
         recyclerView = view.findViewById(R.id.cardRecyclerView)
         monthTextView = view.findViewById(R.id.month)
         monthSelector = view.findViewById(R.id.monthSelector)
@@ -89,6 +97,24 @@ class HomeFragment : Fragment() {
         return view
     }
 
+    private fun updateIncomeExpenseTotals(records: List<CardAdapter.FinanceCard>) {
+        var i = 0.0
+        var e = 0.0
+
+        for (card in records) {
+            val amount = card.amount?.toDoubleOrNull() ?: 0.0
+            if (amount < 0) {
+                e += amount
+            } else {
+                i += amount
+            }
+        }
+
+        income.text = "Rs${i.toString()}"
+        expense.text = "Rs${e.toString()}"
+        total.text =  "Rs${(i + e).toString()}"
+    }
+
     @SuppressLint("SetTextI18n")
     private fun updateMonthDisplay() {
         val monthNames = arrayOf(
@@ -132,13 +158,12 @@ class HomeFragment : Fragment() {
                 currentMonthRecords.add(DummyDatabase.cardList[i])
             }
         }
+
+        updateIncomeExpenseTotals(currentMonthRecords)
         return currentMonthRecords
     }
 
     private fun showCardDetailsPopup(card: CardAdapter.FinanceCard, position: Int) {
-
-
-
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.fragment_records, null)
 
         val amountText = dialogView.findViewById<TextView>(R.id.amountText)
@@ -152,12 +177,13 @@ class HomeFragment : Fragment() {
 
         // Update details based on clicked card
         amountText.text = Database.cardList[position].amount
-        accountText.text =Database.cardList[position].accType
-        categoryText.text = Database.cardList[position].category// Assuming 'title' holds the category name
-        notesText.text = Database.cardList[position].notes // Assuming 'amount' holds the notes for simplicity (you should modify this as needed)
+        dateText.text = Database.cardList[position].date
+        accountText.text = Database.cardList[position].accType
+        categoryText.text = Database.cardList[position].category
+        notesText.text = Database.cardList[position].notes
 
-        accountIcon.setImageResource(card.icon ?: R.drawable.card)
-        categoryIcon.setImageResource(card.icon ?: R.drawable.food)
+        accountIcon.setImageResource(getAccount(Database.cardList[position].accType.toString()) ?: R.drawable.card)
+        categoryIcon.setImageResource(card.icon ?: R.drawable.utilities)
 
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
@@ -166,9 +192,17 @@ class HomeFragment : Fragment() {
         dialog.show()
 
         deleteButton.setOnClickListener {
-            // Optional: delete card here from database if you want
+            if (position in Database.cardList.indices) {
+                Database.cardList.removeAt(position)
+            }
             dialog.dismiss()
+            // Reload view
+            refreshCardList()
         }
+    }
+
+    private fun refreshCardList() {
+        cardAdapter.updateData(loadCurrentMonthRecords())
     }
 
     private fun navigateToCalculatorFragment(uid: String?) {
@@ -199,6 +233,15 @@ class HomeFragment : Fragment() {
                 viewPager.visibility = View.VISIBLE
                 fragmentContainer.visibility = View.GONE
             }
+        }
+    }
+
+    private fun getAccount(account: String): Int? {
+        return when (account) {
+            "Cash" -> R.drawable.cash
+            "Savings" -> R.drawable.savings
+            "Card" -> R.drawable.card
+            else -> R.drawable.card
         }
     }
 

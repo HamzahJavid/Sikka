@@ -43,7 +43,7 @@ class CardAdapter(
 
         // Set the click listener to pass both card and its position
         holder.itemView.setOnClickListener {
-           // onItemClick(item, position)
+            onItemClick(item, position)
         }
     }
 

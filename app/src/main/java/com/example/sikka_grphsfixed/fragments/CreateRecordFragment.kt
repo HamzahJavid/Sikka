@@ -103,9 +103,16 @@ class CalculatorFragment : Fragment() {
     private fun createRecord(uid: String?, mydb: FirebaseDatabase) {
         val keyRef = mydb.getReference("Records").push()
 
+        // Get amount from display
+        val amountText = display.text.toString()
+        val amount = amountText.toDoubleOrNull() ?: 0.0
+
+        // Make amount negative if it's an Expense
+        val finalAmount = if (recordType == "Expense") -amount else amount
+
         val record = mapOf(
             "user" to uid,
-            "amount" to display.text.toString(),
+            "amount" to finalAmount.toString(), // Store finalAmount
             "date" to date.text.toString(),
             "notes" to notes.text.toString(),
             "accType" to selectedAccountType,
@@ -122,6 +129,7 @@ class CalculatorFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed to add record", Toast.LENGTH_SHORT).show()
             }
     }
+
 
     private fun setupNumericButtons(view: View) {
         val numericButtons = listOf(
@@ -298,8 +306,12 @@ class CalculatorFragment : Fragment() {
             "Food" -> R.drawable.food
             "Transport" -> R.drawable.transport
             "Entertainment" -> R.drawable.entertainment
-            "Bills" -> R.drawable.utilities
-            else -> R.drawable.food
+            "Education"->R.drawable.education
+            "Health"->R.drawable.health
+            "Shopping" -> R.drawable.shoping
+            "Travel"->R.drawable.transport
+            "Utilities"->R.drawable.utilities
+            else -> R.drawable.utilities
         }
     }
 }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#0D47EA"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <!-- Logo -->
+    <TextView
+        android:text="Sikka🪙"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="32dp"
+        android:layout_gravity="start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Welcome Text -->
+    <TextView
+        android:fontFamily="@font/poppins_medium"
+        android:text="Hello\nwelcome to\nSikka 🪙"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Username Field -->
+    <EditText
+        android:fontFamily="@font/poppins_medium"
+        android:id="@+id/email_login"
+        android:hint="Enter Email"
+        android:background="@drawable/enter_etc"
+        android:textColorHint="@color/black"
+        android:padding="12dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Password Field -->
+    <EditText
+        android:fontFamily="@font/poppins_medium"
+        android:id="@+id/password_login"
+        android:hint="Enter Password"
+        android:background="@drawable/enter_etc"
+        android:textColorHint="@color/black"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        android:padding="12dp"
+        android:layout_marginBottom="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@null"
+        android:background="@drawable/signup_button"
+        android:text="Login"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="#FFFFFF" />
+
+    <!-- Register Now Text -->
+    <TextView
+        android:fontFamily="@font/poppins_medium"
+        android:id="@+id/register_now_text"
+        android:text="Register now as a user"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "117648439927",
+    "project_id": "sikka-d1d2e",
+    "storage_bucket": "sikka-d1d2e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117648439927:android:74c7c70a439b36d4aaa472",
+        "android_client_info": {
+          "package_name": "com.example.sikka_grphsfixed"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIovhPY8AEN8jIQHUVMVgKGBLdCimTJ-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

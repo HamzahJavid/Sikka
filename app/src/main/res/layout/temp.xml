@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#0D47EA"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Sikka🪙"
+        android:textSize="40dp"
+        android:textColor="#FFFF"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="143dp"
+        tools:layout_editor_absoluteY="339dp">
+
+    </TextView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#0D47A1"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|end"
+        android:layout_marginBottom="10dp">
+
+        <Button
+            android:fontFamily="@font/poppins_medium"
+            android:id="@+id/create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/save_btn"
+            android:text="Save"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp" />
+
+        <Switch
+            android:id="@+id/toggleExpenseIncome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expense"
+            android:textColor="#FFFF"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="16sp"
+            android:thumbTint="#FFFF"
+            android:trackTint="@color/wheat" />
+    </LinearLayout>
+
+
+
+    <EditText
+        android:fontFamily="@font/poppins_medium"
+        android:backgroundTint="@color/wheat"
+        android:id="@+id/Notes"
+        android:background="@drawable/addnotes"
+        android:text="add notes"
+        android:textSize="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        />
+
+
+    <!-- Display -->
+
+    <!-- Row 1: C, ⌫, %, ÷ -->
+    <TextView
+        android:fontFamily="@font/poppins_medium"
+        android:id="@+id/tvDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="109dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/calcdisplay"
+        android:gravity="end"
+        android:padding="16dp"
+        android:text="0"
+        android:textColor="#FFFFFF"
+        android:textSize="48sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+
+        >
+
+        <Button
+            android:fontFamily="@font/poppins_medium"
+            android:background="@drawable/save_btn"
+            android:id="@+id/account"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="account"
+            android:textSize="17dp" />
+
+        <Button
+            android:textSize="17dp"
+            android:fontFamily="@font/poppins_medium"
+            android:background="@drawable/save_btn"
+            android:id="@+id/category"
+            android:text="category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+
+
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_1"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="1" />
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_2"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="2" />
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_3"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="3" />
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_divide"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="/" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_4"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="4" />
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_5"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="5" />
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_6"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="6" />
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_multiply"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="×" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginRight="3dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_7"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="7" />
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_8"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="8" />
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_9"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="9" />
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_subtract"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="−" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginRight="3dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_0"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="0" />
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_dot"
+                android:layout_marginRight="3dp"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="." />
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_equals"
+                android:textSize="30dp"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="=" />
+
+            <Button
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/btn_add"
+                android:textSize="30dp"
+                android:background="@drawable/calc_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="+" />
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:background="@color/back_colour"
+
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <TextView
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="#FFFF"
+            android:id="@+id/date_cr"
+            android:textSize="20dp"
+            android:text="April 25,2025"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="#FFFF"
+            android:id="@+id/time_cr"
+            android:text="8:000"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>

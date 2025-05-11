@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#0D47EA"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <!-- Logo -->
+    <TextView
+        android:fontFamily="@font/poppins_medium"
+        android:text="Sikka🪙"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="32dp"
+        android:layout_gravity="start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Title -->
+    <TextView
+        android:text="SIGN UP"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="#FFFFFF"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:fontFamily="@font/poppins_medium"
+        android:text="Sign in with email address"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginBottom="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Email Field -->
+    <EditText
+        android:id="@+id/email"
+        android:fontFamily="@font/poppins_medium"
+        android:hint="Yourname@gmail.com"
+        android:background="@drawable/enter_etc"
+        android:textColorHint="#1A1A1A"
+        android:padding="12dp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Username -->
+    <EditText
+        android:id="@+id/username"
+        android:fontFamily="@font/poppins_medium"
+        android:hint="Enter User Name"
+        android:background="@drawable/enter_etc"
+        android:textColorHint="@color/black"
+        android:padding="12dp"
+        android:textColor="#1A1A1A"
+        android:layout_marginBottom="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Password -->
+    <EditText
+        android:id="@+id/password"
+        android:fontFamily="@font/poppins_medium"
+        android:hint="Enter Password"
+        android:background="@drawable/enter_etc"
+        android:textColorHint="#1A1A1A"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        android:padding="12dp"
+        android:layout_marginBottom="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Sign Up Button -->
+    <Button
+        android:fontFamily="@font/poppins_medium"
+        android:id="@+id/signup_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/signup_button"
+        android:text="Sign up"
+        android:textColor="#FFFF" />
+</LinearLayout>

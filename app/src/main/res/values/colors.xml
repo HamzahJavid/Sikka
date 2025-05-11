@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Light / Skin Tones -->
+    <color name="light_beige">#F5F5DC</color>
+    <color name="misty_rose">#FFE4E1</color>
+    <color name="light_almond">#FFEBCD</color>
+    <color name="champagne_pink">#F7E7CE</color>
+    <color name="pale_peach">#FFDAB9</color>
+    <color name="ivory">#FFFFF0</color>
+    <color name="linen">#FAF0E6</color>
+    <color name="seashell">#FFF5EE</color>
+
+    <!-- Warm Colors -->
+    <color name="crimson">#DC143C</color>
+    <color name="tomato">#FF6347</color>
+    <color name="coral">#FF7F50</color>
+    <color name="orange_red">#FF4500</color>
+    <color name="dark_orange">#FF8C00</color>
+    <color name="gold">#FFD700</color>
+    <color name="salmon">#FA8072</color>
+
+    <!-- Earth Tones -->
+    <color name="olive">#808000</color>
+    <color name="saddle_brown">#8B4513</color>
+    <color name="peru">#CD853F</color>
+    <color name="rosy_brown">#BC8F8F</color>
+    <color name="tan">#D2B48C</color>
+    <color name="burlywood">#DEB887</color>
+    <color name="wheat">#F5DEB3</color>
+    <color name="khaki">#F0E68C</color>
+
+    <!-- Cool Colors -->
+    <color name="light_blue">#ADD8E6</color>
+    <color name="sky_blue">#87CEEB</color>
+    <color name="steel_blue">#4682B4</color>
+    <color name="dodger_blue">#1E90FF</color>
+    <color name="royal_blue">#4169E1</color>
+    <color name="teal">#008080</color>
+    <color name="cadet_blue">#5F9EA0</color>
+
+    <!-- Greens -->
+    <color name="light_green">#90EE90</color>
+    <color name="medium_sea_green">#3CB371</color>
+    <color name="lime_green">#32CD32</color>
+    <color name="forest_green">#228B22</color>
+    <color name="dark_olive_green">#556B2F</color>
+    <color name="mint_cream">#F5FFFA</color>
+
+    <!-- Purples / Pinks -->
+    <color name="orchid">#DA70D6</color>
+    <color name="plum">#DDA0DD</color>
+    <color name="violet">#EE82EE</color>
+    <color name="medium_purple">#9370DB</color>
+    <color name="indigo">#4B0082</color>
+    <color name="lavender">#E6E6FA</color>
+
+    <!-- Neutrals / Grays -->
+    <color name="light_gray">#D3D3D3</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="dim_gray">#696969</color>
+    <color name="slate_gray">#708090</color>
+    <color name="charcoal">#36454F</color>
+    <color name="black">#000000</color>
+
+
+
+    <color name="card_colour">#219ebc</color>
+    <color name="back_colour">#001233</color>
+
+
+
+
+
+
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/cash_option"
+        android:title="Cash" />
+    <item
+        android:id="@+id/savings_option"
+        android:title="Savings" />
+    <item
+        android:id="@+id/card_option"
+        android:title="Card" />
+</menu>

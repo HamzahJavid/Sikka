@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/food"
+        android:icon="@drawable/food"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/transport"
+        android:icon="@drawable/transport"
+        android:title="Transport" />
+
+    <item
+        android:id="@+id/entertainment"
+        android:icon="@drawable/entertainment"
+        android:title="Entertainment" />
+
+    <item
+        android:id="@+id/shopping"
+        android:icon="@drawable/shoping"
+        android:title="Shopping" />
+
+    <item
+        android:id="@+id/health"
+        android:icon="@drawable/health"
+        android:title="Health" />
+
+    <item
+        android:id="@+id/education"
+        android:icon="@drawable/education"
+        android:title="Education" />
+
+    <item
+        android:id="@+id/utilities"
+        android:icon="@drawable/utilities"
+        android:title="Utilities" />
+
+    <item
+        android:id="@+id/travel"
+        android:icon="@drawable/transport"
+        android:title="Travel" />
+
+    <item
+        android:id="@+id/investments"
+        android:icon="@drawable/savings"
+        android:title="Investments" />
+
+</menu>
